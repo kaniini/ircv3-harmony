@@ -4,6 +4,7 @@
   <!ENTITY RFC1459 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.1459.xml">
   <!ENTITY RFC2812 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2812.xml">
   <!ENTITY RFC3629 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3629.xml">
+  <!ENTITY RFC3454 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3454.xml">
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 <?rfc strict="yes" ?>
@@ -289,6 +290,14 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
             </section>
             <section anchor="replies" title="Replies">
                 <section anchor="reply-RPL_ISUPPORT" title="RPL_ISUPPORT (005)">
+                    <t>Once client registration is complete, the server MUST send at least one RPL_ISUPPORT (005) numeric to the client.
+                    The server MAY send more than one RPL_ISUPPORT numeric and it is RECOMMENDED that consecutive RPL_ISUPPORT numerics
+                    are sent adjacent to each other.</t>
+
+                    <t>Each parameter of this numeric is a token and optional value in the form of TOKEN[=VALUE].  The tokens MUST be sent
+                    in upper-case but, unless otherwise specified, the value MUST be treated as case-sentitive.</t>
+
+                    <t>A full listing of standard RPL_ISUPPORT tokens is provided in <xref target="list-ISUPPORT-tokens" />.</t>
                 </section>
             </section>
         </section>
@@ -299,6 +308,90 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
             &RFC3629;
             &RFC1459;
             &RFC2812;
+            &RFC3454;
         </references>
+
+        <section anchor="list-ISUPPORT-tokens" title="List of standard RPL_ISUPPORT tokens">
+            <section anchor="ISUPPORT-CLIENTVER" title="CLIENTVER">
+                <t>A value which describes the specific version of the IRCv3 protocol being used on the
+                server.  This token is mainly meant to be informative for clients so that they can voluntarily
+                disable some legacy support for performance reasons.</t>
+            </section>
+
+            <section anchor="ISUPPORT-CASEMAPPING" title="CASEMAPPING">
+                <t>The CASEMAPPING parameter allows the server to specify which method it uses to compare equality
+                of case-insensitive strings.  Possible values are:
+                    <list style="bullets">
+                        <t>"ascii": The ASCII characters 0x61 through 0x7a are defined as the lower-case characters of ASCII
+                        characters 0x41 through 0x5a.  No other equivilancy is defined.</t>
+
+                        <t>"rfc1459": The ASCII characters 0x61 through 0x7e are defined as the lower-case characters of ASCII
+                        characters 0x41 through 0x5e.  No other equivilancy is defined.</t>
+
+                        <t>"strict-rfc1459": The ASCII characters 0x61 through 0x7d are defined as the lower-case characters
+                        of ASCII characters 0x41 through 0x5d.  No other equivilancy is defined.</t>
+
+                        <t>"rfc3454": Strings are compared using the stringprep method described in <xref target="RFC3454" />.</t>
+                    </list>
+                </t>
+
+                <t>New implementations SHOULD default to using the "rfc3454" method.</t>
+            </section>
+
+            <section anchor="ISUPPORT-PREFIX" title="PREFIX">
+            </section>
+
+            <section anchor="ISUPPORT-CHANTYPES" title="CHANTYPES">
+            </section>
+
+            <section anchor="ISUPPORT-CHANMODES" title="CHANMODES">
+            </section>
+
+            <section anchor="ISUPPORT-NETWORK" title="NETWORK">
+            </section>
+
+            <section anchor="ISUPPORT-MODES" title="MODES">
+            </section>
+
+            <section anchor="ISUPPORT-MAXCHANNELS" title="MAXCHANNELS">
+            </section>
+
+            <section anchor="ISUPPORT-CHANLIMIT" title="CHANLIMIT">
+            </section>
+
+            <section anchor="ISUPPORT-MAXLIST" title="MAXLIST">
+            </section>
+
+            <section anchor="ISUPPORT-EXCEPTS" title="EXCEPTS">
+            </section>
+
+            <section anchor="ISUPPORT-INVEX" title="INVEX">
+            </section>
+
+            <section anchor="ISUPPORT-KNOCK" title="KNOCK">
+            </section>
+
+            <section anchor="ISUPPORT-STATUSMSG" title="STATUSMSG">
+            </section>
+
+            <section anchor="ISUPPORT-CALLERID" title="CALLERID">
+            </section>
+
+            <section anchor="ISUPPORT-NICKLEN" title="NICKLEN">
+                <t>An integer value which describes the maximum allowed length of a nickname in octets.</t>
+            </section>
+
+            <section anchor="ISUPPORT-CHANNELLEN" title="CHANNELLEN">
+                <t>An integer value which describes the maximum allowed length of a channel name in octets.</t>
+            </section>
+
+            <section anchor="ISUPPORT-TOPICLEN" title="TOPICLEN">
+                <t>An integer value which describes the maximum allowed length of a channel's topic in octets.</t>
+            </section>
+
+            <section anchor="ISUPPORT-AWAYLEN" title="AWAYLEN">
+                <t>An integer value which describes the maximum allowed length of an away message in octets.</t>
+            </section>
+        </section>
     </back>
 </rfc>
