@@ -297,7 +297,155 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
                     <t>Each parameter of this numeric is a token and optional value in the form of TOKEN[=VALUE].  The tokens MUST be sent
                     in upper-case but, unless otherwise specified, the value MUST be treated as case-sentitive.</t>
 
-                    <t>A full listing of standard RPL_ISUPPORT tokens is provided in <xref target="list-ISUPPORT-tokens" />.</t>
+                    <section anchor="list-ISUPPORT-tokens" title="List of standard RPL_ISUPPORT tokens">
+                        <section anchor="ISUPPORT-CLIENTVER" title="CLIENTVER">
+                            <t>Syntax: CLIENTVER=float</t>
+
+                            <t>A value which describes the specific version of the IRCv3 protocol being used on the
+                            server.  This token is mainly meant to be informative for clients so that they can voluntarily
+                            disable some legacy support for performance reasons.</t>
+                        </section>
+
+                        <section anchor="ISUPPORT-CASEMAPPING" title="CASEMAPPING">
+                            <t>Syntax: CASEMAPPING=string</t>
+
+                            <t>The CASEMAPPING parameter allows the server to specify which method it uses to compare equality
+                            of case-insensitive strings.  Possible values are:
+                               <list style="symbols">
+                                   <t>"ascii": The ASCII characters 0x61 through 0x7a are defined as the lower-case characters of ASCII
+                                   characters 0x41 through 0x5a.  No other equivilancy is defined.</t>
+
+                                   <t>"rfc1459": The ASCII characters 0x61 through 0x7e are defined as the lower-case characters of ASCII
+                                   characters 0x41 through 0x5e.  No other equivilancy is defined.</t>
+
+                                   <t>"strict-rfc1459": The ASCII characters 0x61 through 0x7d are defined as the lower-case characters
+                                   of ASCII characters 0x41 through 0x5d.  No other equivilancy is defined.</t>
+
+                                   <t>"rfc3454": Strings are compared using the stringprep method described in <xref target="RFC3454" />.</t>
+                               </list>
+                            </t>
+
+                            <t>New implementations SHOULD default to using the "rfc3454" method in the event that this token is not available.</t>
+                        </section>
+
+                        <section anchor="ISUPPORT-PREFIX" title="PREFIX">
+                        </section>
+
+                        <section anchor="ISUPPORT-CHANTYPES" title="CHANTYPES">
+                            <t>Syntax: CHANTYPES=chars</t>
+
+                            <t>The CHANTYPES parameter specifies the valid characters to begin a channel name.</t>
+
+                            <t>The default value for CHANTYPES is "CHANTYPES=#&amp;", which corresponds to <xref target="RFC1459" />.  It SHOULD NOT be
+                            specified if the server supports exactly these channel types.</t>
+
+                            <t>The CHANMODES parameter does not require a value; if none is given, the server does not support any channel types.</t>
+                        </section>
+
+                        <section anchor="ISUPPORT-CHANMODES" title="CHANMODES">
+                            <t>Syntax: CHANMODES=A,B,C,D</t>
+
+                            <t>The CHANMODES token specifies the modes that may be set on a channel.  These modes are split into four categories, as follows:
+                                <list style="symbols">
+                                    <t>Type A: Modes that add or remove an address to or from a list.  These modes always take a parameter when sent by the
+                                    server to a client; when sent by a client, they may be specified without a parameter, which requests the server to display
+                                    the current contents of the corresponding list on the channel to the client.</t>
+
+                                    <t>Type B: Modes that change a setting on the channel.  These modes always take a parameter.</t>
+
+                                    <t>Type C: Modes that change a setting on the channel.  These modes take a parameter only when set; the parameter is absent
+                                    when the mode is removed both in the client's and server's MODE command.</t>
+
+                                    <t>Type D: Modes that change a setting on the channel.  These modes never take a parameter.</t>
+                                </list>
+                            </t>
+
+                            <t>If the server sends any additional types after these 4, the client MUST ignore them.  The IRC server MUST NOT list modes in
+                            CHANMODES which are also present in the PREFIX parameter; however, for completeness, modes described in PREFIX may be treated as
+                            type B modes.</t>
+
+                            <t>If the server does not support any modes corresponding to a particular type, it should advertise that type as the empty string.</t>
+
+                            <t>The default value for the CHANMODES token is: "b,k,l,imnpst".</t>
+                        </section>
+
+                        <section anchor="ISUPPORT-NETWORK" title="NETWORK">
+                        </section>
+
+                        <section anchor="ISUPPORT-MODES" title="MODES">
+                        </section>
+
+                        <section anchor="ISUPPORT-CHANLIMIT" title="CHANLIMIT">
+                            <t>Syntax: CHANLIMIT=pfx:num[,pfx:num,...]</t>
+
+                            <t>This parameter specifies the maximum number of channels that a client may join.
+                            The value is a series of "pfx:num" pairs, where 'pfx' refers to one or more channel prefix characters (as specified in
+                            CHANTYPES), and 'num' indicates how many of these types of channel the client may join in total.  If there is no limit
+                            to the number of certain channel type(s) a client may join, the limit should be specified as the empty string, for
+                            example "#:".</t>
+
+                            <t>Clients on either this server or a remote server may be on more than this number of channels; this parameter is only
+                            intended for information on how many channels the client it is advertised to may join.</t>
+
+                            <t>There is no default value for the CHANLIMIT token.</t>
+                        </section>
+
+                        <section anchor="ISUPPORT-MAXLIST" title="MAXLIST">
+                        </section>
+
+                        <section anchor="ISUPPORT-EXCEPTS" title="EXCEPTS">
+                        </section>
+
+                        <section anchor="ISUPPORT-INVEX" title="INVEX">
+                        </section>
+
+                        <section anchor="ISUPPORT-KNOCK" title="KNOCK">
+                        </section>
+
+                        <section anchor="ISUPPORT-SAFELIST" title="SAFELIST">
+                            <t>The SAFELIST parameter indicates that the client may request a "LIST" command from the server, without being disconnected
+                            due to the large amount of data generated by the command.</t>
+
+                            <t>The SAFELIST token MUST NOT be specified with a value.</t>
+
+                            <t>The default value for the SAFELIST token is none; that is, the client may not safely request a LIST command.</t>
+                        </section>
+
+                        <section anchor="ISUPPORT-STATUSMSG" title="STATUSMSG">
+                        </section>
+
+                        <section anchor="ISUPPORT-CALLERID" title="CALLERID">
+                        </section>
+
+                        <section anchor="ISUPPORT-NICKLEN" title="NICKLEN">
+                            <t>Syntax: NICKLEN=integer</t>
+
+                            <t>An integer value which describes the maximum allowed length of a nickname in octets.</t>
+                        </section>
+
+                        <section anchor="ISUPPORT-CHANNELLEN" title="CHANNELLEN">
+                            <t>Syntax: CHANNELLEN=integer</t>
+
+                            <t>An integer value which describes the maximum allowed length of a channel name in octets.</t>
+
+                            <t>The default value for CHANNELLEN is 200.  The CHANNELLEN token does not require a value, if none
+                            is given, channel names are not limited in length.</t>
+                        </section>
+
+                        <section anchor="ISUPPORT-TOPICLEN" title="TOPICLEN">
+                            <t>Syntax: TOPICLEN=integer</t>
+
+                            <t>An integer value which describes the maximum allowed length of a channel's topic in octets.</t>
+
+                            <t>The TOPICLEN token does not require a value; if none is given, the length of channel topics is not limited.</t>
+                        </section>
+
+                        <section anchor="ISUPPORT-AWAYLEN" title="AWAYLEN">
+                            <t>Syntax: AWAYLEN=integer</t>
+
+                            <t>An integer value which describes the maximum allowed length of an away message in octets.</t>
+                        </section>
+                    </section>
                 </section>
             </section>
         </section>
@@ -310,155 +458,5 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
             &RFC2812;
             &RFC3454;
         </references>
-
-        <section anchor="list-ISUPPORT-tokens" title="List of standard RPL_ISUPPORT tokens">
-            <section anchor="ISUPPORT-CLIENTVER" title="CLIENTVER">
-                <t>Syntax: CLIENTVER=float</t>
-
-                <t>A value which describes the specific version of the IRCv3 protocol being used on the
-                server.  This token is mainly meant to be informative for clients so that they can voluntarily
-                disable some legacy support for performance reasons.</t>
-            </section>
-
-            <section anchor="ISUPPORT-CASEMAPPING" title="CASEMAPPING">
-                <t>Syntax: CASEMAPPING=string</t>
-
-                <t>The CASEMAPPING parameter allows the server to specify which method it uses to compare equality
-                of case-insensitive strings.  Possible values are:
-                    <list style="symbols">
-                        <t>"ascii": The ASCII characters 0x61 through 0x7a are defined as the lower-case characters of ASCII
-                        characters 0x41 through 0x5a.  No other equivilancy is defined.</t>
-
-                        <t>"rfc1459": The ASCII characters 0x61 through 0x7e are defined as the lower-case characters of ASCII
-                        characters 0x41 through 0x5e.  No other equivilancy is defined.</t>
-
-                        <t>"strict-rfc1459": The ASCII characters 0x61 through 0x7d are defined as the lower-case characters
-                        of ASCII characters 0x41 through 0x5d.  No other equivilancy is defined.</t>
-
-                        <t>"rfc3454": Strings are compared using the stringprep method described in <xref target="RFC3454" />.</t>
-                    </list>
-                </t>
-
-                <t>New implementations SHOULD default to using the "rfc3454" method in the event that this token is not available.</t>
-            </section>
-
-            <section anchor="ISUPPORT-PREFIX" title="PREFIX">
-            </section>
-
-            <section anchor="ISUPPORT-CHANTYPES" title="CHANTYPES">
-                <t>Syntax: CHANTYPES=chars</t>
-
-                <t>The CHANTYPES parameter specifies the valid characters to begin a channel name.</t>
-
-                <t>The default value for CHANTYPES is "CHANTYPES=#&", which corresponds to <xref target="RFC1459" />.  It SHOULD NOT be
-                specified if the server supports exactly these channel types.</t>
-
-                <t>The CHANMODES parameter does not require a value; if none is given, the server does not support any channel types.</t>
-            </section>
-
-            <section anchor="ISUPPORT-CHANMODES" title="CHANMODES">
-                <t>Syntax: CHANMODES=A,B,C,D</t>
-
-                <t>The CHANMODES token specifies the modes that may be set on a channel.  These modes are split into four categories, as follows:
-                    <list type="symbols">
-                        <t>Type A: Modes that add or remove an address to or from a list.  These modes always take a parameter when sent by the
-                        server to a client; when sent by a client, they may be specified without a parameter, which requests the server to display
-                        the current contents of the corresponding list on the channel to the client.</t>
-
-                        <t>Type B: Modes that change a setting on the channel.  These modes always take a parameter.</t>
-
-                        <t>Type C: Modes that change a setting on the channel.  These modes take a parameter only when set; the parameter is absent
-                        when the mode is removed both in the client's and server's MODE command.</t>
-
-                        <t>Type D: Modes that change a setting on the channel.  These modes never take a parameter.</t>
-                    </list>
-                </t>
-
-                <t>If the server sends any additional types after these 4, the client MUST ignore them.  The IRC server MUST NOT list modes in
-                CHANMODES which are also present in the PREFIX parameter; however, for completeness, modes described in PREFIX may be treated as
-                type B modes.</t>
-
-                <t>If the server does not support any modes corresponding to a particular type, it should advertise that type as the empty string.</t>
-
-                <t>The default value for the CHANMODES token is: "b,k,l,imnpst".</t>
-            </section>
-
-            <section anchor="ISUPPORT-NETWORK" title="NETWORK">
-            </section>
-
-            <section anchor="ISUPPORT-MODES" title="MODES">
-            </section>
-
-            <section anchor="ISUPPORT-CHANLIMIT" title="CHANLIMIT">
-                <t>Syntax: CHANLIMIT=pfx:num[,pfx:num,...]</t>
-
-                <t>This parameter specifies the maximum number of channels that a client may join.
-                The value is a series of "pfx:num" pairs, where 'pfx' refers to one or more channel prefix characters (as specified in
-                CHANTYPES), and 'num' indicates how many of these types of channel the client may join in total.  If there is no limit
-                to the number of certain channel type(s) a client may join, the limit should be specified as the empty string, for
-                example "#:".</t>
-
-                <t>Clients on either this server or a remote server may be on more than this number of channels; this parameter is only
-                intended for information on how many channels the client it is advertised to may join.</t>
-
-                <t>There is no default value for the CHANLIMIT token.</t>
-            </section>
-
-            <section anchor="ISUPPORT-MAXLIST" title="MAXLIST">
-            </section>
-
-            <section anchor="ISUPPORT-EXCEPTS" title="EXCEPTS">
-            </section>
-
-            <section anchor="ISUPPORT-INVEX" title="INVEX">
-            </section>
-
-            <section anchor="ISUPPORT-KNOCK" title="KNOCK">
-            </section>
-
-            <section anchor="ISUPPORT-SAFELIST" title="SAFELIST">
-                <t>The SAFELIST parameter indicates that the client may request a "LIST" command from the server, without being disconnected
-                due to the large amount of data generated by the command.</t>
-
-                <t>The SAFELIST token MUST NOT be specified with a value.</t>
-
-                <t>The default value for the SAFELIST token is none; that is, the client may not safely request a LIST command.</t>
-            </section>
-
-            <section anchor="ISUPPORT-STATUSMSG" title="STATUSMSG">
-            </section>
-
-            <section anchor="ISUPPORT-CALLERID" title="CALLERID">
-            </section>
-
-            <section anchor="ISUPPORT-NICKLEN" title="NICKLEN">
-                <t>Syntax: NICKLEN=integer</t>
-
-                <t>An integer value which describes the maximum allowed length of a nickname in octets.</t>
-            </section>
-
-            <section anchor="ISUPPORT-CHANNELLEN" title="CHANNELLEN">
-                <t>Syntax: CHANNELLEN=integer</t>
-
-                <t>An integer value which describes the maximum allowed length of a channel name in octets.</t>
-
-                <t>The default value for CHANNELLEN is 200.  The CHANNELLEN token does not require a value, if none
-                is given, channel names are not limited in length.</t>
-            </section>
-
-            <section anchor="ISUPPORT-TOPICLEN" title="TOPICLEN">
-                <t>Syntax: TOPICLEN=integer</t>
-
-                <t>An integer value which describes the maximum allowed length of a channel's topic in octets.</t>
-
-                <t>The TOPICLEN token does not require a value; if none is given, the length of channel topics is not limited.</t>
-            </section>
-
-            <section anchor="ISUPPORT-AWAYLEN" title="AWAYLEN">
-                <t>Syntax: AWAYLEN=integer</t>
-
-                <t>An integer value which describes the maximum allowed length of an away message in octets.</t>
-            </section>
-        </section>
     </back>
 </rfc>
