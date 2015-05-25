@@ -306,13 +306,13 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
                             of case-insensitive strings.  Possible values are:
                                <list style="symbols">
                                    <t>"ascii": The ASCII characters 0x61 through 0x7a are defined as the lower-case characters of ASCII
-                                   characters 0x41 through 0x5a.  No other equivilancy is defined.</t>
+                                   characters 0x41 through 0x5a.  No other equivalency is defined.</t>
 
                                    <t>"rfc1459": The ASCII characters 0x61 through 0x7e are defined as the lower-case characters of ASCII
-                                   characters 0x41 through 0x5e.  No other equivilancy is defined.</t>
+                                   characters 0x41 through 0x5e.  No other equivalency is defined.</t>
 
                                    <t>"strict-rfc1459": The ASCII characters 0x61 through 0x7d are defined as the lower-case characters
-                                   of ASCII characters 0x41 through 0x5d.  No other equivilancy is defined.</t>
+                                   of ASCII characters 0x41 through 0x5d.  No other equivalency is defined.</t>
 
                                    <t>"rfc3454": Strings are compared using the stringprep method described in <xref target="RFC3454" />.</t>
                                </list>
