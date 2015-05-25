@@ -149,6 +149,40 @@
 
                 <t>IRC messages are always lines of characters delimited with a CR-LF (Carriage Return - Line Feed) pair, and these
                 messages SHOULD NOT exceed 512 characters in length unless otherwise negotiated with the server as a capability.</t>
+
+                <section title="Message Format in Augmented BNF">
+                    <t>The protocol messages must be extracted from the contiguous stream of octets.  The current solution is to designate
+                    two characters, CR and LF, as separators.  Empty messages are silently ignored, which permits the use of the sequence
+                    CR-LF between messages without extra problems.</t>
+
+                    <t>The extracted message is parsed into the components &lt;tags&gt;, &lt;prefix&gt;, &lt;command&gt; and list
+                    of parameters (&lt;params&gt;).</t>
+
+                    <t>The Augmented BNF representation for this is:</t>
+
+                    <figure><artwork type="abnf"><![CDATA[
+message      =  [ "@" tags SPACE ] [ ":" prefix SPACE ] command [ params ] crlf
+prefix       =  servername / ( nickname [ [ "!" user ] "@" host ] )
+command      =  1*letter / 3digit
+params       =  *14( SPACE middle ) [ SPACE ":" trailing ]
+             =/ 14( SPACE middle ) [ SPACE [ ":" ] trailing ]
+
+nospcrlfcl   =  %x01-09 / %x0B-0C / %x0E-1F / %x21-39 / %x3B-FF
+                    ; any octet except NUL, CR, LF, " " and ":"
+middle       =  nospcrlfcl *( ":" / nospcrlfcl )
+trailing     =  *( ":" / " " / nospcrlfcl )
+
+tags         =  tag [';' tag]*
+tag          =  key ['=' value]
+nospcrlfscl  =  %x01-09 / %x0B-0C / %x0E-1F / %x21-39 / %x3C-FF
+key          =  [ vendor '/' ] *( nospcrflscl )
+value        =  nospcrflscl *( nospcrflscl )
+
+SPACE        =  %x20        ; space character
+crlf         =  %x0D %x0A   ; "carriage return" "linefeed"
+]]>
+                    </artwork></figure>
+                </section>
             </section>
         </section>
     </middle>
