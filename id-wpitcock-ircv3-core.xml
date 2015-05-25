@@ -260,8 +260,8 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
                 <t>The RPL_ISUPPORT (005) numeric contains significant information for clients and is covered in more detail in <xref target="reply-RPL_ISUPPORT" />.</t>
                 <section anchor="capability-negotiation" title="Capability negotiation">
                     <t>IRC is an asynchronous protocol, which means that IRC clients may issue additional IRC commands while previous commands are being processed.
-                    Additionally, there is no guarantee of a specific kind of banner being issued upon connection.  Some servers also do not complain about unknown
-                    commands during registration, which means that a client cannot reliably do passive implementation discovery at registration time.</t>
+                    Some servers also do not complain about unknown commands during registration, which means that a client cannot reliably do passive implementation
+                    discovery at registration time.</t>
 
                     <t>The solution to these problems is to extend the registration process with actual capability negotiation.  If the server supports capability
                     negotiation, the registration process will be suspended until negotiation is completed.  If the server does not support capability negotiation,
