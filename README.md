@@ -36,3 +36,8 @@ Install xml2rfc using PIP:
     # pip3 install xml2rfc
 
 Then run `build.sh`.
+
+
+## I just want to read the spec?
+
+Snapshot builds of the spec are available [here](http://rabbit.dereferenced.org/~nenolod/ircv3-harmony/).
