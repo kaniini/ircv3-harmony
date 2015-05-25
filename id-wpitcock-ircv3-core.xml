@@ -197,9 +197,6 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
                            <t>The NUL character is not special in message framing but as it would cause extra complexities in normal C string handling
                               it is not allowed within messages.</t>
                            <t>The trailing parameter may be an empty string.</t>
-                           <t>Use of the extended prefix (['!' &lt;user&gt; ] ['@' &lt;host&gt; ]) must not be used in server to server
-                              communications and is only intended for server to client messages in order to provide clients with more
-                              useful information about who a message is from without the need for additional queries.</t>
                        </list>
                     </t>
 
