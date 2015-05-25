@@ -206,6 +206,38 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
                        in the list.  For example, many server commands will assume that the first parameter after the command is the list of targets.</t>
                 </section>
             </section>
+            <section title="Numeric replies">
+                <t>Most of the messages sent to the server generate a reply of some sort.  The most common type of reply is a
+                numeric reply, used for both errors and normal replies.  The numeric reply MUST be sent as one message consisting
+                of the sender prefix, the three-digit numeric and the target of the reply.  A numeric reply MUST NOT originate from
+                the client.  In all other respects, a numeric reply SHOULD be treated as any other message, with the exception that
+                the command keyword is made up of 3 numeric digits rather than a string of letters.  A list of different replies is
+                included in <xref target="numeric-replies" />.</t>
+            </section>
+            <section title="Wildcard expressions">
+                <t>When wildcards are allowed in a string, it is referred as a "mask".</t>
+
+                <t>For string matching purposes, the protocol allows the use of two special characters: &quot;?&quot; (0x3F) to
+                match one and only one character, and &quot;*&quot; (0x2A) to match any number of any characters.  These two
+                characters can be escaped using the character &quot;\&quot; (0x5C).</t>
+
+                <t>The Augmented BNF syntax for this is:</t>
+
+                <figure><artwork type="abnf"><![CDATA[
+    mask       =  *( nowild / noesc wildone / noesc wildmany )
+    wildone    =  %x3F
+    wildmany   =  %x2A
+    nowild     =  %x01-29 / %x2B-3E / %x40-FF
+                    ; any octet except NUL, "*", "?"
+    noesc      =  %x01-5B / %x5D-FF
+                    ; any octet except NUL and "\"
+    matchone   =  %x01-FF
+                    ; matches wildone
+    matchmany  =  *matchone
+                    ; matches wildmany]]></artwork></figure>
+            </section>
+        </section>
+        <section title="Replies" anchor="numeric-replies">
         </section>
     </middle>
     <back>
