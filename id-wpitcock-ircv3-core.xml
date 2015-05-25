@@ -125,6 +125,31 @@
                 equivilants of []\.  This is specified using the CASEMAPPING configuration attribute, and an IRC network MUST use the same
                 CASEMAPPING attribute in the entire network.</t>
             </section>
+            <section title="Messages">
+                <t>Servers and clients send messages between each other which may or may not generate a reply.  If the
+                message contains a valid command, as described in later sections, the client SHOULD expect a reply as specified,
+                but it is not advised to wait for the reply.  Client to server communications should be treated as asynchronous
+                in nature.</t>
+
+                <t>IRC messages consist of up to four parts: the tags section (optional), the prefix (optional), the command and it's
+                parameters.  All components of the message are separated using the UTF-8 space character (0x20).</t>
+
+                <t>The presence of a tags section is designated with a single leading &quot;@&quot; symbol (0x40).  The tags section
+                consists of a set of key-value pairs delimited by an equals sign (0x3D).  Each key-value pair is delimited by a
+                semi-colon (&quot;;&quot;) (0x3B), which may be escaped using a backslash (&quot;\&quot;) (0x5C).  There MUST NOT be
+                any whitespace between the &quot;@&quot; symbol and the key-value pairs.</t>
+
+                <t>The presence of a prefix is designated with a single leading colon (&quot;:&quot;) (0x3A).  There MUST NOT be any
+                whitespace between the &quot;:&quot; symbol and the prefix itself.  The prefix is used by servers to designate the
+                origin of the message.  If the prefix is missing, then clients SHOULD assume it came from the server the client is
+                connected to.  Clients SHOULD NOT use the prefix when they are sending a message to a server, but MAY send relevant
+                tags.</t>
+
+                <t>The command must be either a valid IRC command or a three-digit number represented in UTF-8 text.</t>
+
+                <t>IRC messages are always lines of characters delimited with a CR-LF (Carriage Return - Line Feed) pair, and these
+                messages SHOULD NOT exceed 512 characters in length unless otherwise negotiated with the server as a capability.</t>
+            </section>
         </section>
     </middle>
     <back>
