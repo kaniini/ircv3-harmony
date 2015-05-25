@@ -212,7 +212,7 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
                 of the sender prefix, the three-digit numeric and the target of the reply.  A numeric reply MUST NOT originate from
                 the client.  In all other respects, a numeric reply SHOULD be treated as any other message, with the exception that
                 the command keyword is made up of 3 numeric digits rather than a string of letters.  A list of different replies is
-                included in <xref target="numeric-replies" />.</t>
+                included in <xref target="replies" />.</t>
             </section>
             <section title="Wildcard expressions">
                 <t>When wildcards are allowed in a string, it is referred as a "mask".</t>
@@ -236,8 +236,48 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
     matchmany  =  *matchone
                     ; matches wildmany]]></artwork></figure>
             </section>
-        </section>
-        <section title="Replies" anchor="numeric-replies">
+            <section anchor="registration" title="Connection registration">
+                <t>Immediately upon establishing a connection the client must attempt registration without waiting for any banner message from the server.</t>
+                <t>Until registration is complete, only a small subset of commands may be accepted by the server.</t>
+                <t>The recommended order of commands during registration is:
+                   <list style="numbers">
+                       <t>STARTTLS</t>
+                       <t>PASS</t>
+                       <t>CAP</t>
+                       <t>NICK</t>
+                       <t>USER</t>
+                   </list>
+                </t>
+                <t>If the transport layer is not secured by TLS it is RECOMMENDED that the client attempt to opportunistically enable encryption by sending
+                the STARTTLS (see <xref target="cmd-STARTTLS" />) command before sending any other messages.</t>
+                <t>The PASS command (see <xref target="cmd-PASS" />) is not required for the connection to be registered, but if included it MUST precede the
+                latter of the NICK and USER commands.</t>
+                <t>If the server supports capability negotiation the CAP command (see <xref target="cmd-CAP" />) suspends the registration process and immediately
+                starts the capability negotiation process.  See <xref target="capability-negotiation" /> for more information.</t>
+                <t>The NICK and USER commands (see <xref target="cmd-NICK" /> and <xref target="cmd-USER" />, respectively) are used to identify the user's nickname,
+                username and "real name". Unless the registration process is suspended by a STARTTLS or CAP negotiation, these commands will end the registration process.</t>
+                <t>Upon successful completion of the registration process, the server MUST send the RPL_WELCOME (001) and RPL_ISUPPORT (005) numerics.
+                The server SHOULD also send the MOTD (Message of the Day), if one exists, and MAY send other numerics.</t>
+                <t>The RPL_ISUPPORT (005) numeric contains significant information for clients and is covered in more detail in <xref target="reply-RPL_ISUPPORT" />.</t>
+                <section anchor="capability-negotiation" title="Capability negotiation">
+                </section>
+            </section>
+            <section anchor="commands" title="Commands">
+                <section anchor="cmd-CAP" title="CAP">
+                </section>
+                <section anchor="cmd-NICK" title="NICK">
+                </section>
+                <section anchor="cmd-USER" title="USER">
+                </section>
+                <section anchor="cmd-PASS" title="PASS">
+                </section>
+                <section anchor="cmd-STARTTLS" title="STARTTLS">
+                </section>
+            </section>
+            <section anchor="replies" title="Replies">
+                <section anchor="reply-RPL_ISUPPORT" title="RPL_ISUPPORT (005)">
+                </section>
+            </section>
         </section>
     </middle>
     <back>
