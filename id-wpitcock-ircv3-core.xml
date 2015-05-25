@@ -191,12 +191,12 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
 
                     <t>Notes:
                        <list style="numbers">
-                           <t>SPACE explicitly is only the octet 0x20.  Other forms of whitespace such as tabulation, are not considered part of SPACE.</t>
+                           <t>SPACE explicitly is only the octet 0x20.  Other forms of whitespace, such as tabs, are not considered part of SPACE.</t>
                            <t>After extracting the parameter list, all parameters are equal, whether matched by &quot;middle&quot; or &quot;trailing&quot;.
                               &quot;trailing&quot; is just a syntactic trick to allow SPACE within parameter.</t>
                            <t>The NUL character is not special in message framing but as it would cause extra complexities in normal C string handling
                               it is not allowed within messages.</t>
-                           <t>The last parameter may be an empty string.</t>
+                           <t>The trailing parameter may be an empty string.</t>
                            <t>Use of the extended prefix (['!' &lt;user&gt; ] ['@' &lt;host&gt; ]) must not be used in server to server
                               communications and is only intended for server to client messages in order to provide clients with more
                               useful information about who a message is from without the need for additional queries.</t>
