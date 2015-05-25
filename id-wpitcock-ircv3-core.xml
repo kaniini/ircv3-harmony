@@ -3,6 +3,7 @@
   <!ENTITY RFC2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
   <!ENTITY RFC5226 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5226.xml">
   <!ENTITY RFC1459 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.1459.xml">
+  <!ENTITY RFC2812 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2812.xml">
   <!ENTITY RFC3629 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3629.xml">
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
@@ -30,10 +31,78 @@
         <keyword>IRCv3</keyword>
         <keyword>Chat</keyword>
         <abstract>
-            <t>This document specifies an updated IRC client protocol which deprecates RFCs 1459 and 2812.</t>
+            <t>The IRC protocol has been developed by the greater IRC user and administrator community since
+            the first version formalized in <xref target="RFC1459"/>.  It has adapted over the years to be the
+            primary collaboration tool for many groups because of it's simplicity and robustness.</t>
+
+            <t>The IRC Core Protocol version 3 updates <xref target="RFC1459"/> and <xref target="RFC2812"/> with
+            a base protocol and framework for extensions which has been developed over the past decade, as well as
+            standardizes current known best practices in the greater IRC community.  The IRC Core Protocol version 3
+            framework mechanisms also provide some level of compatibility with legacy IRC clients.</t>
         </abstract>
     </front>
     <middle>
+        <section title="Requirements Language">
+            <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+            "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+            document are to be interpreted as described in <xref target="RFC2119"/>.</t>
+        </section>
+        <section title="Introduction">
+            <t>IRC networks have been maintained over several decades for use with text-based conferencing.
+            This document describes the core IRC client protocol and a framework for extending the protocol.</t>
+
+            <t>IRC itself is a distributed teleconferencing and signalling system which is well-suited for running
+            on many machines in a distributed manner.  A typical setup involves many clients connecting to an IRC
+            server which is connected to other servers in the network.  The IRC server handles all of the necessary
+            message routing and broadcast tasks.</t>
+
+            <section title="Servers">
+                <t>In a typical IRC network, the servers are linked to each other in a topology which resembles an
+                acyclic graph, however, some experimental networks have developed alternative topologies such as
+                mesh-like topologies.  Other IRC server software implements support for hot failover connections,
+                however this is usually dependent on a specialized server-to-server protocol.</t>
+            </section>
+
+            <section title="Clients">
+                <t>A client is anything connected to a server which is using the IRC client protocol.  Each client
+                is distinguished from other clients by having a unique nickname.  In addition to the nickname, every
+                server on the network maintains other information on the client, such as the real hostname of the
+                client, the username that the client has selected and other information about the client such as the
+                name of the user.</t>
+
+                <section title="IRC Operators">
+                    <t>To facilitate maintenance of the network, IRC features a type of privileged user known as an
+                    "IRC operator".  IRC operators are granted special privilege to perform maintenance-related tasks
+                    such as rerouting servers as needed to mitigate bad network routing.</t>
+
+                    <t>Operators also typically have the ability to enforce network policy by removing users from the
+                    network who do not comply with the network's policies.</t>
+                </section>
+            </section>
+
+            <section title="Channels">
+                <t>A channel is a named group of zero or more clients which will all receive messages that
+                are addressed to that channel.  The channel is typically created when the first client joins
+                it, and typically ceases to exist when the last client leaves it, however some IRC server software
+                support keeping the channel open when no clients are presently using it in order to maintain
+                the channel's settings.</t>
+
+                <t>Channel names are strings which begin with a configured CHANPREFIX of length up to a
+                configured CHANNELLEN length.  Apart from the requirement that the channel name begin with
+                a recognized CHANPREFIX, the only other restriction is that may not contain any spaces,
+                control codes or commas (&quot;,&quot;) which is used as a list-item separator by the protocol.</t>
+
+                <section title="Channel Statuses">
+                    <t>A channel may have zero or more channel operators which provide for the maintenance and
+                    moderation of the channel.  Depending on the server software in use, the channel operators may
+                    have special sigils as designated by the PREFIX configuration value.</t>
+
+                    <t>In a channel which is moderated, users which are allowed to bypass the moderation are given
+                    "voice" status.  Users who have "voice" status MAY be given the &quot;+&quot; sigil to designate
+                    that they have the ability to bypass moderation.</t>
+                </section>
+            </section>
+        </section>
     </middle>
     <back>
         <references title="Normative References">
@@ -41,6 +110,7 @@
             &RFC5226;
             &RFC3629;
             &RFC1459;
+            &RFC2812;
         </references>
     </back>
 </rfc>
