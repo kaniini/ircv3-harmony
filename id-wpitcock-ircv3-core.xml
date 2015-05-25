@@ -102,6 +102,29 @@
                     that they have the ability to bypass moderation.</t>
                 </section>
             </section>
+
+            <section title="Services, Accounts and Authentication">
+                <t>A common feature of the present-day IRC networks are the usage of services servers.  These servers
+                provide specialized bots which provide an authentication layer on the network, allowing for ownership of
+                nicknames and channels.  Services usually provide facilities for account management and authentication,
+                and map ownership of objects such as nicknames and channels to those accounts.</t>
+            </section>
+        </section>
+        <section title="The IRC Client Protocol">
+            <section title="Overview">
+                <t>This protocol is a superset of <xref target="RFC1459" />, and is intended to be backwards compatible with
+                <xref target="RFC1459" /> where possible.  It describes only the client side of the protocol unlike <xref target="RFC1459" />,
+                as the server protocols have diverged over the years and are no longer compatible.</t>
+            </section>
+            <section title="Character Encoding">
+                <t>While <xref target="RFC1459" /> does not specify any specific character set, servers implementing the IRCv3 core
+                protocol SHOULD use UTF-8 as defined by <xref target="RFC3629" />.  Clients SHOULD send UTF-8 unless explicitly configured
+                not to do so.</t>
+
+                <t>Because of IRC's scandinavian origin, some IRC servers specify that the characters {}| be mapped to be the lower-case
+                equivilants of []\.  This is specified using the CASEMAPPING configuration attribute, and an IRC network MUST use the same
+                CASEMAPPING attribute in the entire network.</t>
+            </section>
         </section>
     </middle>
     <back>
