@@ -128,8 +128,8 @@
                 protocol SHOULD use UTF-8 as defined by <xref target="RFC3629" />.  Clients SHOULD send UTF-8 unless explicitly configured
                 not to do so.</t>
 
-                <t>Because of IRC's scandinavian origin, some IRC servers specify that the characters {}| be mapped to be the lower-case
-                equivilants of []\.  This is specified using the CASEMAPPING configuration attribute, and an IRC network MUST use the same
+                <t>Because of IRC's Scandinavian origin, some IRC servers specify that the characters {}| be mapped to be the lower-case
+                equivalents of []\.  This is specified using the CASEMAPPING configuration attribute, and an IRC network MUST use the same
                 CASEMAPPING attribute in the entire network.</t>
             </section>
             <section title="Messages">
