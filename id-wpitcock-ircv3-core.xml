@@ -253,7 +253,8 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
                 <t>If the server supports capability negotiation the CAP command (see <xref target="cmd-CAP" />) suspends the registration process and immediately
                 starts the capability negotiation process.  See <xref target="capability-negotiation" /> for more information.</t>
                 <t>The NICK and USER commands (see <xref target="cmd-NICK" /> and <xref target="cmd-USER" />, respectively) are used to identify the user's nickname,
-                username and "real name". Unless the registration process is suspended by a STARTTLS or CAP negotiation, these commands will end the registration process.</t>
+                username and "real name". Once both commands have been submitted, the registration process will end, unless it is still suspended by a STARTTLS or
+                CAP negotiation.</t>
                 <t>Upon successful completion of the registration process, the server MUST send the RPL_WELCOME (001) and RPL_ISUPPORT (005) numerics.
                 The server SHOULD also send the MOTD (Message of the Day), if one exists, and MAY send other numerics.</t>
                 <t>The RPL_ISUPPORT (005) numeric contains significant information for clients and is covered in more detail in <xref target="reply-RPL_ISUPPORT" />.</t>
