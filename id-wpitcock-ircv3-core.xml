@@ -300,14 +300,6 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
                     in upper-case but, unless otherwise specified, the value MUST be treated as case-sensitive.</t>
 
                     <section anchor="list-ISUPPORT-tokens" title="List of standard RPL_ISUPPORT tokens">
-                        <section anchor="ISUPPORT-CLIENTVER" title="CLIENTVER">
-                            <t>Syntax: CLIENTVER=float</t>
-
-                            <t>A value which describes the specific version of the IRCv3 protocol being used on the
-                            server.  This token is mainly meant to be informative for clients so that they can voluntarily
-                            disable some legacy support for performance reasons.</t>
-                        </section>
-
                         <section anchor="ISUPPORT-CASEMAPPING" title="CASEMAPPING">
                             <t>Syntax: CASEMAPPING=string</t>
 
@@ -505,6 +497,25 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
                             <t>Syntax: AWAYLEN=integer</t>
 
                             <t>An integer value which describes the maximum allowed length of an away message in octets.</t>
+
+                            <t>The AWAYLEN token does not require a value; if none is given, the length of away messages is not limited.</t>
+                        </section>
+
+                        <section anchor="ISUPPORT-USERLEN" title="USERLEN">
+                            <t>Syntax: USERLEN=integer</t>
+
+                            <t>An integer value which describes the maximum allowed length of an username in octets.</t>
+
+                            <t>The USERLEN token does not require a value; if none is given, the length of usernames is not limited.</t>
+                        </section>
+
+                        <section anchor="ISUPPORT-LINELEN" title="LINELEN">
+                            <t>Syntax: LINELEN=integer</t>
+
+                            <t>An integer value which describes the maximum allowed length of a single IRC message (line) in octets.</t>
+
+                            <t>The LINELEN token defaults to a value of 512 for compatibility with legacy IRC implementations.  There is no specified
+                            upper bound for LINELEN.</t>
                         </section>
                     </section>
                 </section>
