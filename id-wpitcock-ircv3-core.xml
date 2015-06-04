@@ -155,7 +155,8 @@
                 <t>The command must be either a valid IRC command or a three-digit number represented in UTF-8 text.</t>
 
                 <t>IRC messages are always lines of characters delimited with a CR-LF (Carriage Return - Line Feed) pair, and these
-                messages SHOULD NOT exceed 512 characters in length unless otherwise negotiated with the server as a capability.</t>
+                messages SHOULD NOT exceed 1024 octets in length (512 bytes for tags, 512 for the rest) unless otherwise indicated
+                by the server (see <xref target="ISUPPORT-LINELEN" />).  If the limit is exceeded, the line MAY be silently truncated.</t>
 
                 <section title="Message Format in Augmented BNF">
                     <t>The protocol messages must be extracted from the contiguous stream of octets.  The current solution is to designate
