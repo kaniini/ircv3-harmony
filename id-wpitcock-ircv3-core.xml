@@ -286,9 +286,9 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
 
                     <t>Numeric Replies:
                         <list>
-                            <t>ERR_ERRONEUSNICKNAME</t>
-                            <t>ERR_NICKNAMEINUSE</t>
-                            <t>ERR_NICKCOLLISION</t>
+                            <t><xref target="error-ERR_ERRONEOUSNICKNAME" format="title" /></t>
+                            <t><xref target="error-ERR_NICKNAMEINUSE" format="title" /></t>
+                            <t><xref target="error-ERR_NICKCOLLISION" format="title" /></t>
                         </list>
                     </t>
                 </section>
@@ -303,8 +303,8 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
 
                     <t>Numeric Replies:
                         <list>
-                            <t>ERR_NEEDMOREPARAMS</t>
-                            <t>ERR_ALREADYREGISTRED</t>
+                            <t><xref target="error-ERR_NEEDMOREPARAMS" format="title" /></t>
+                            <t><xref target="error-ERR_ALREADYREGISTRED" format="title" /></t>
                         </list>
                     </t>
                 </section>
