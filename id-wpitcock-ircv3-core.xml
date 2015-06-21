@@ -293,6 +293,20 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
                     </t>
                 </section>
                 <section anchor="cmd-USER" title="USER">
+                    <t>Syntax: "USER &lt;username&gt; &lt;ignored&gt; &lt;ignored&gt; &lt;realname&gt;"</t>
+
+                    <t>The USER message is used at registration time to inform the server of the username and realname of the user.</t>
+
+                    <t>The realname parameter may contain a space and if so MUST preceeded by the colon (:) delimiter.</t>
+
+                    <t>NOTE: parameters 2 and 3 are ignored and are simply included for backward compatibility with <xref target="RFC1459" /></t>
+
+                    <t>Numeric Replies:
+                        <list>
+                            <t>ERR_NEEDMOREPARAMS</t>
+                            <t>ERR_ALREADYREGISTRED</t>
+                        </list>
+                    </t>
                 </section>
                 <section anchor="cmd-PASS" title="PASS">
                 </section>
@@ -557,6 +571,16 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
                     <t>Returned when the server detects a nickname collision (e.g. when a heal of a netsplit occurs and both sides have a different user with the same nickname).
                     This error may be followed by a possible termination of the connection through a KILL command or a forcible changing of nick through a NICK command or
                     the use of some other server specific system.</t>
+                </section>
+                <section anchor="error-ERR_NEEDMOREPARAMS" title="ERR_NEEDMOREPARAMS (461)">
+                    <t>Syntax: "433 &lt;command&gt; :Not enough parameters"</t>
+
+                    <t>Returned when a command was sent by the client with not enough parameters.</t>
+                </section>
+                <section anchor="error-ERR_ALREADYREGISTRED" title="ERR_NEEDMOREPARAMS (462)">
+                    <t>Syntax: "462 &lt;command&gt; :You may not reregister"</t>
+
+                    <t>Returned when the client tries to send a command which may be only used at registration time (e.g. PASS, USER) after registration has completed.</t>
                 </section>
             </section>
         </section>
