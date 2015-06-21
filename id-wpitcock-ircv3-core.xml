@@ -316,6 +316,19 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
                     </t>
                 </section>
                 <section anchor="cmd-PASS" title="PASS">
+                    <t>Syntax: "PASS &lt;password&gt;"</t>
+
+                    <t>The PASS message is used at registration time to provide a password to fully open a connection with the server. It SHOULD NOT be used to authenticate
+                    the user and is instead intended to be a way of limiting access to the server to only those with access to the password.</t>
+
+                    <t>The PASS command can be sent multiple times but only the last attempt is utilized and the command SHOULD NOT be used after registration.</t>
+
+                    <t>Numeric Replies:
+                        <list>
+                            <t><xref target="error-ERR_NEEDMOREPARAMS" format="title" /></t>
+                            <t><xref target="error-ERR_ALREADYREGISTRED" format="title" /></t>
+                        </list>
+                    </t>
                 </section>
                 <section anchor="cmd-STARTTLS" title="STARTTLS">
                 </section>
