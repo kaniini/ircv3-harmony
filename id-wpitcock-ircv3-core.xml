@@ -31,6 +31,13 @@
                 <uri>http://allnutt.eu/</uri>
             </address>
         </author>
+        <author fullname="Lalit Maganti" initials="L." surname="Maganti">
+            <organization>FusionX</organization>
+            <address>
+                <email>lalitmaganti@gmail.com</email>
+                <uri>https://github.com/tilal6991/</uri>
+            </address>
+        </author>
         <date year="2015" />
         <area>General</area>
         <workgroup>Network Working Group</workgroup>
