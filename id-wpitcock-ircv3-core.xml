@@ -304,7 +304,7 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
 
                     <t>The USER message is used at registration time to inform the server of the username and realname of the user.</t>
 
-                    <t>The realname parameter may contain a space and if so MUST preceeded by the colon (:) delimiter.</t>
+                    <t>The realname parameter may contain a space and if so MUST be preceeded by the colon (:) delimiter.</t>
 
                     <t>NOTE: parameters 2 and 3 are ignored and are simply included for backward compatibility with <xref target="RFC1459" /></t>
 
