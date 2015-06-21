@@ -158,7 +158,7 @@
                 messages SHOULD NOT exceed 1024 octets in length (512 bytes for tags, 512 for the rest) unless otherwise indicated
                 by the server (see <xref target="ISUPPORT-LINELEN" />).  If the limit is exceeded, the line MAY be silently truncated.</t>
 
-                <section title="Message Format in Augmented BNF">
+                <section anchor="message-ABNF" title="Message Format in Augmented BNF">
                     <t>The protocol messages must be extracted from the contiguous stream of octets.  The current solution is to designate
                     two characters, CR and LF, as separators.  Empty messages are silently ignored, which permits the use of the sequence
                     CR-LF between messages without extra problems.</t>
@@ -279,6 +279,18 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
                 <section anchor="cmd-CAP" title="CAP">
                 </section>
                 <section anchor="cmd-NICK" title="NICK">
+                    <t>Syntax: "NICK &lt;new nickname&gt;"</t>
+
+                    <t>The NICK message serves a dual purpose: it can be used to give the user a nickname or it can be used by an existing user to
+                    change their nickname.</t>
+
+                    <t>Numeric Replies:
+                        <list>
+                            <t>ERR_ERRONEUSNICKNAME</t>
+                            <t>ERR_NICKNAMEINUSE</t>
+                            <t>ERR_NICKCOLLISION</t>
+                        </list>
+                    </t>
                 </section>
                 <section anchor="cmd-USER" title="USER">
                 </section>
@@ -526,6 +538,25 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
                             upper bound for LINELEN.</t>
                         </section>
                     </section>
+                </section>
+            </section>
+            <section anchor="errors" title="Errors">
+                <section anchor="error-ERR_ERRONEOUSNICKNAME" title="ERR_ERRONEOUSNICKNAME (432)">
+                    <t>Syntax: "432 &lt;nickname&gt; :Erroneous nickname"</t>
+
+                    <t>Returned when a NICK command is sent with a nickname argument which does not comply with the format of a nickname set out in <xref target="message-ABNF" /></t>
+                </section>
+                <section anchor="error-ERR_NICKNAMEINUSE" title="ERR_NICKNAMEINUSE (433)">
+                    <t>Syntax: "433 &lt;nickname&gt; :Nickname is already in use"</t>
+
+                    <t>Returned when a NICK command is sent with a nickname argument which currently exists (i.e. is currently the nickname of another user)</t>
+                </section>
+                <section anchor="error-ERR_NICKCOLLISION" title="ERR_NICKCOLLISION (436)">
+                    <t>Syntax: "433 &lt;nickname&gt; :Nickname collision"</t>
+
+                    <t>Returned when the server detects a nickname collision (e.g. when a heal of a netsplit occurs and both sides have a different user with the same nickname).
+                    This error may be followed by a possible termination of the connection through a KILL command or a forcible changing of nick through a NICK command or
+                    the use of some other server specific system.</t>
                 </section>
             </section>
         </section>
