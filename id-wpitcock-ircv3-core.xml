@@ -573,6 +573,13 @@ crlf         =  %x0D %x0A   ; "carriage return" "linefeed"]]></artwork></figure>
                         </section>
                     </section>
                 </section>
+                <section anchor="reply-RPL_TOPICWHOTIME" title="RPL_TOPICWHOTIME (333)">
+                    <t>Syntax: "333 &lt;nickname&gt; &lt;channel&gt; &lt;topic-setter-nick&gt;!&lt;username&gt;@&lt;hostname&gt; &lt;timestamp&gt;"</t>
+
+                    <t>After a channel is joined, and RPL_TOPIC (332) is sent, the server SHOULD send the RPL_TOPICWHOTIME (333) numeric to the client.</t>
+
+                    <t>The numeric provides information about who set the channel topic and when. &lt;timestamp&gt; is an epoch time in seconds</t>
+                </section>
             </section>
             <section anchor="errors" title="Errors">
                 <section anchor="error-ERR_ERRONEOUSNICKNAME" title="ERR_ERRONEOUSNICKNAME (432)">
